@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="17.953">
-    <testcase classname="ECommerce Login" name="Login on ECommerce platform" time="17.563">
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="7" time="100.224">
+    <testcase classname="ECommerce Login" name="Login on ECommerce platform" time="18.26">
         <system-out>
             <![CDATA[Given I launch browser......................................................passed
 When I open the Automation Ecommerce WebSite................................passed
@@ -9,6 +9,66 @@ Then I input "rdrg.furlan@gmail.com" in email address.......................pass
 Then I input "123123" in password...........................................passed
 Then I click on signin button...............................................passed
 Then I will see the Logout button...........................................passed
+And Close browser...........................................................passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="ECommerce Login" name="Error when tried to login with invalid credentials" time="19.395">
+        <system-out>
+            <![CDATA[Given I launch browser......................................................passed
+When I open the Automation Ecommerce WebSite................................passed
+Then I click on Login button................................................passed
+Then I input "invalid@invalid.com" in email address.........................passed
+Then I input "123123" in password...........................................passed
+Then I click on signin button...............................................passed
+Then I will see the error message "Authentication failed"...................passed
+And Close browser...........................................................passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="ECommerce Login" name="Login on ECommerce with DataTables values" time="12.486">
+        <system-out>
+            <![CDATA[Given I launch browser......................................................passed
+When I open the Automation Ecommerce WebSite................................passed
+Then I try to signin with these credentials:................................passed
+Then I will see the Logout button...........................................passed
+And Close browser...........................................................passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="ECommerce Login" name="Error when tried to login with invalid credentials in DataTables values" time="10.977">
+        <system-out>
+            <![CDATA[Given I launch browser......................................................passed
+When I open the Automation Ecommerce WebSite................................passed
+Then I try to signin with these credentials:................................passed
+Then I will see the error message "Authentication failed"...................passed
+And Close browser...........................................................passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="ECommerce Login" name="Sign In with parameterized data" time="12.706">
+        <system-out>
+            <![CDATA[Given I launch browser......................................................passed
+When I open the Automation Ecommerce WebSite................................passed
+Then I will validate the credentials: invalid@invalid.com 123123 false......passed
+And Close browser...........................................................passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="ECommerce Login" name="Sign In with parameterized data 2" time="12.495">
+        <system-out>
+            <![CDATA[Given I launch browser......................................................passed
+When I open the Automation Ecommerce WebSite................................passed
+Then I will validate the credentials: anotherInvalid@invalid.com 123123 false.passed
+And Close browser...........................................................passed
+]]>
+        </system-out>
+    </testcase>
+    <testcase classname="ECommerce Login" name="Sign In with parameterized data 3" time="13.478">
+        <system-out>
+            <![CDATA[Given I launch browser......................................................passed
+When I open the Automation Ecommerce WebSite................................passed
+Then I will validate the credentials: rdrg.furlan@gmail.com 123123 true.....passed
 And Close browser...........................................................passed
 ]]>
         </system-out>

@@ -31,4 +31,9 @@ public class WebDriverWrapper {
         return driver;
     }
 
+    public static void quit() {
+        //driver.close();
+        driver.quit();
+        driver = null;
+    }
 }

@@ -17,8 +17,6 @@ public class NavigationUtils {
     }
 
     public void quitDriver() {
-        WebDriver driver = WebDriverWrapper.getInstance();
-        //driver.close();
-        driver.quit();
+        WebDriverWrapper.quit();
     }
 }

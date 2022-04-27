@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<testsuite errors="0" failures="0" name="io.cucumber.core.plugin.JUnitFormatter" skipped="0" tests="1" time="17.953">
+    <testcase classname="ECommerce Login" name="Login on ECommerce platform" time="17.563">
+        <system-out>
+            <![CDATA[Given I launch browser......................................................passed
+When I open the Automation Ecommerce WebSite................................passed
+Then I click on Login button................................................passed
+Then I input "rdrg.furlan@gmail.com" in email address.......................passed
+Then I input "123123" in password...........................................passed
+Then I click on signin button...............................................passed
+Then I will see the Logout button...........................................passed
+And Close browser...........................................................passed
+]]>
+        </system-out>
+    </testcase>
+</testsuite>

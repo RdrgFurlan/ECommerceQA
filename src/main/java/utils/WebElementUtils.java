@@ -22,6 +22,9 @@ public final class WebElementUtils {
 
     public static void checkElementAvailability(WebElement element) {
         WebElement webElement = getDriverWait().until(ExpectedConditions.elementToBeClickable(element));
+        if (webElement == null){
+            System.out.println("Bad idea");
+        }
         //assertNotNull(webElement);
     }
 
@@ -35,7 +38,8 @@ public final class WebElementUtils {
 
     public static void clickOnElement(WebElement element) {
         checkElementAvailability(element);
-        element.click();
+        element.sendKeys(Keys.ENTER);
+        //element.click();
     }
 
     public static boolean waitValueInElement(WebElement element, String expectedValue) {

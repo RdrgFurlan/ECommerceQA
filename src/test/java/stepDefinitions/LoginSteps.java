@@ -44,7 +44,7 @@ public class LoginSteps {
     @Then("I will see the error message {string}")
     public void i_will_see_the_error_message(String expectedErrorMessage) {
         objLoginPage = new LoginPage();
-        //assertTrue(objLoginPage.compareErrorMessageReceived(expectedErrorMessage));
+        org.junit.Assert.assertTrue(objLoginPage.compareErrorMessageReceived(expectedErrorMessage));
     }
 
     @Then("I try to signin with these credentials:")

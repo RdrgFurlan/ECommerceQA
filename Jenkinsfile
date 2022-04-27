@@ -63,6 +63,7 @@ pipeline {
             echo 'One way or another, I have finished'
             sh '''
                 docker stop FirefoxStandalone
+                docker container prune -f
             '''
             deleteDir() /* clean up our workspace */
           }

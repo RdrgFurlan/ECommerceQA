@@ -7,7 +7,8 @@ pipeline {
           steps {
             sh '''java -version
                   mvn --version
-'''
+                  docker --version
+            '''
           }
         }
         stage('Check for POM file in repository') {
@@ -23,7 +24,7 @@ pipeline {
         steps {
           sh '''
           docker pull selenium/standalone-firefox
-          docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-firefox:latest
+          docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-firefox:latest -name FirefoxStandalone
           '''
         }
       }
@@ -57,6 +58,27 @@ pipeline {
     }
 
   }
+    post {
+        always {
+            sh '''
+                docker stop FirefoxStandalone
+            '''
+            echo 'One way or another, I have finished'
+            deleteDir() /* clean up our workspace */
+          }
+          success {
+              echo 'I succeeded!'
+          }
+          unstable {
+              echo 'I am unstable :/'
+          }
+          failure {
+              echo 'I failed :('
+          }
+          changed {
+              echo 'Things were different before...'
+          }
+      }
   environment {
     Dev = 'DEV'
   }

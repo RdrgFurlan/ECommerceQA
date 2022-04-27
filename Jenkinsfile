@@ -19,6 +19,15 @@ pipeline {
       }
     }
 
+      stage('Build web driver docker image') {
+        steps {
+          sh '''
+          docker pull selenium/standalone-firefox
+          docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-firefox:latest
+               '''
+        }
+      }
+
     stage('Build Solution') {
       steps {
         sh '''mvn clean test

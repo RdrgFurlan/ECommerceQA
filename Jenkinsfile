@@ -24,7 +24,7 @@ pipeline {
         steps {
           sh '''
           docker pull selenium/standalone-firefox
-          docker run -d -p 4444:4444 --shm-size="2g" selenium/standalone-firefox:latest --name FirefoxStandalone
+          docker run --name FirefoxStandalone -d -p 4444:4444 --shm-size="2g" selenium/standalone-firefox:latest
           '''
         }
       }
@@ -60,10 +60,10 @@ pipeline {
   }
     post {
         always {
+            echo 'One way or another, I have finished'
             sh '''
                 docker stop FirefoxStandalone
             '''
-            echo 'One way or another, I have finished'
             deleteDir() /* clean up our workspace */
           }
           success {

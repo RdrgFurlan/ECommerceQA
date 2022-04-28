@@ -19,10 +19,22 @@ pipeline {
       }
     }
 
+        stage('Clean docker containers'){
+            steps{
+                script{
+                    def doc_containers = sh(returnStdout: true, script: 'docker ps --filter "name=FirefoxStandalone" -qa').replaceAll("\n", " ")
+                    if (doc_containers) {
+                        sh '''
+                        docker stop ${doc_containers}
+                        '''
+                    }
+                }
+            }
+        }
+
       stage('Build web driver docker image') {
         steps {
           sh '''
-          docker stop FirefoxStandalone
           docker container prune -f
           docker pull selenium/standalone-firefox
           docker run --name FirefoxStandalone -d -p 4444:4444 --shm-size="2g" selenium/standalone-firefox:latest

@@ -1,57 +1,54 @@
 pipeline {
-  agent any
-  stages {
-    stage('Tools Version') {
-      parallel {
+    agent any
+    stages {
         stage('Tools Version') {
-          steps {
-            sh '''java -version
-                  mvn --version
-                  docker --version
-            '''
-          }
-        }
-        stage('Check for POM file in repository') {
-          steps {
-            fileExists 'pom.xml'
-          }
-        }
-      }
-    }
-
-        stage('Clean docker containers'){
-            steps{
-                script{
-                    def doc_containers = sh(returnStdout: true, script: 'docker ps --filter "name=FirefoxStandalone" -qa').replaceAll("\n", " ")
-                    if (doc_containers) {
+            parallel {
+                stage('Tools Version') {
+                    steps {
                         sh '''
-                        docker stop ${doc_containers}
+                            java -version
+                            mvn --version
+                            docker --version
                         '''
+                    }
+                }
+                stage('Check for POM file in repository') {
+                    steps {
+                        fileExists 'pom.xml'
                     }
                 }
             }
         }
 
-      stage('Build web driver docker image') {
-        steps {
-          sh '''
-          docker container prune -f
-          docker pull selenium/standalone-firefox
-          docker run --name FirefoxStandalone -d -p 4444:4444 --shm-size="2g" selenium/standalone-firefox:latest
-          '''
+        stage('Clean docker containers'){
+            steps{
+                sh '''
+                    docker stop FirefoxStandalone || true
+                    docker container prune -f
+                '''
+            }
         }
-      }
 
-    stage('Build Solution') {
-      steps {
-        sh '''mvn clean test
-             '''
-      }
-    }
+        stage('Build web driver docker container') {
+            steps {
+                sh '''
+                    docker pull selenium/standalone-firefox
+                    docker run --name FirefoxStandalone -d -p 4444:4444 --shm-size="2g" selenium/standalone-firefox:latest
+                '''
+            }
+        }
 
-    stage('Generate HTML report') {
-        steps {
-            cucumber buildStatus: 'UNSTABLE',
+        stage('Build Solution') {
+            steps {
+                sh '''
+                    mvn clean test
+                '''
+            }
+        }
+
+        stage('Generate HTML report') {
+            steps {
+                cucumber buildStatus: 'UNSTABLE',
                     reportTitle: 'My report',
                     fileIncludePattern: '**/Cucumber.json',
                     trendsLimit: 10,
@@ -61,16 +58,9 @@ pipeline {
                             'value': 'Firefox'
                         ]
                     ]
+                }
             }
-        }
-
-    stage('Send Message to Teams') {
-      steps {
-        echo 'Sending message to Teams'
-      }
     }
-
-  }
     post {
         always {
             echo 'One way or another, I have finished'

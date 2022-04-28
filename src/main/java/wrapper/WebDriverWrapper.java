@@ -13,16 +13,21 @@ import java.util.Map;
 
 public class WebDriverWrapper {
 
-    public static String remote_url_chrome = "http://localhost:4444/wd/hub";
+    public static String remote_url_browser = "http://localhost:4444/wd/hub";
 
-    public static WebDriver driver;
+    private static WebDriver driver;
 
     public static WebDriver getInstance() {
         if (driver == null) {
             DesiredCapabilities desiredCapabilities = DesiredCapabilities.firefox();
+//            FirefoxOptions options = new FirefoxOptions();
+//            options.addArguments("browserName","firefox");
+//            options.addArguments("browserVersion","99.0");
+//            options.addArguments("platformName","Linux");
+
             URL url = null;
             try {
-                url = new URL("http://localhost:4444/wd/hub");
+                url = new URL(remote_url_browser);
             } catch (MalformedURLException e) {
                 throw new RuntimeException(e);
             }

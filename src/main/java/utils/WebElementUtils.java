@@ -1,5 +1,6 @@
 package utils;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,8 +9,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import services.DataManagerServices;
 import wrapper.WebDriverWrapper;
-
-import java.time.Duration;
 
 public final class WebElementUtils {
 
@@ -23,9 +22,14 @@ public final class WebElementUtils {
     public static void checkElementAvailability(WebElement element) {
         WebElement webElement = getDriverWait().until(ExpectedConditions.elementToBeClickable(element));
         if (webElement == null){
-            System.out.println("Bad idea");
+            throw new RuntimeException("Element " + element.getText() + " is null");
         }
-        //assertNotNull(webElement);
+    }
+
+    public static void waitUntilBeVisibleAndClickable(WebElement element) {
+        WebDriverWait wait = getDriverWait();
+        wait.until(ExpectedConditions.visibilityOf(element));
+        wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public static void sendKeysToField(WebElement element, String value) {
@@ -37,16 +41,15 @@ public final class WebElementUtils {
     }
 
     public static void clickOnElement(WebElement element) {
-        checkElementAvailability(element);
-        element.sendKeys(Keys.ENTER);
+        waitUntilBeVisibleAndClickable(element);
+        JavascriptExecutor js = (JavascriptExecutor) WebDriverWrapper.getInstance();
+        js.executeScript("arguments[0].click();", element);
         //element.click();
     }
 
     public static boolean waitValueInElement(WebElement element, String expectedValue) {
-        Boolean elementFound = getDriverWait().until((ExpectedCondition<Boolean>) a -> element != null
+        return getDriverWait().until((ExpectedCondition<Boolean>) a -> element != null
                 && element.getAttribute("value").trim().equalsIgnoreCase(expectedValue));
-
-        return elementFound;
     }
 
     public static String getElementValue(WebElement webElement) {

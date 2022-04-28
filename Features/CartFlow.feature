@@ -1,5 +1,11 @@
 Feature: ECommerce Cart Flow
 
+  Scenario: Force error scenario to visualize on report and test jenkins pipeline
+    Given I launch browser
+    When I open the Automation Ecommerce WebSite
+    Then I click on Add to cart
+    And Close browser
+
   Scenario: Add product to cart
     Given I launch browser
     When I open the Automation Ecommerce WebSite

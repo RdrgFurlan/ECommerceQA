@@ -70,6 +70,14 @@ pipeline {
             '''
             deleteDir() /* clean up our workspace */
           }
+          success {
+              office365ConnectorSend webhookUrl: ${env.TEAMS_WEBHOOK_URL},
+                  factDefinitions: [[name: "Test Results", template: http://localhost:8080/job/ECommerceQA/${env.BUILD_NUMBER}/cucumber-html-reports_fb242bb7-17b2-346f-b0a4-d7a3b25b65b4/overview-features.html]]
+          }
+          failure {
+              office365ConnectorSend webhookUrl: ${env.TEAMS_WEBHOOK_URL},
+                  factDefinitions: [[name: "Test Results", template: http://localhost:8080/job/ECommerceQA/${env.BUILD_NUMBER}/cucumber-html-reports_fb242bb7-17b2-346f-b0a4-d7a3b25b65b4/overview-features.html]]
+          }
       }
   environment {
     Dev = 'DEV'

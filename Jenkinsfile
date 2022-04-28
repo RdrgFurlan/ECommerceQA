@@ -16,7 +16,6 @@ pipeline {
             fileExists 'pom.xml'
           }
         }
-
       }
     }
 
@@ -70,16 +69,12 @@ pipeline {
             deleteDir() /* clean up our workspace */
           }
           success {
-              echo 'I succeeded!'
-          }
-          unstable {
-              echo 'I am unstable :/'
+              office365ConnectorSend webhookUrl: "https://qaconsultants2.webhook.office.com/webhookb2/8523f4e6-2c60-4348-aab2-c44f963b0cef@a786690b-7b5d-4f26-82c4-6de8eb5b99b3/IncomingWebhook/9161730248524ccd884964191535d559/e6c57fc7-d758-42f4-bfbf-05db838b6952",
+                  factDefinitions: [[name: "Build Success", template: "Build was finalized with success"]]
           }
           failure {
-              echo 'I failed :('
-          }
-          changed {
-              echo 'Things were different before...'
+              office365ConnectorSend webhookUrl: "https://qaconsultants2.webhook.office.com/webhookb2/8523f4e6-2c60-4348-aab2-c44f963b0cef@a786690b-7b5d-4f26-82c4-6de8eb5b99b3/IncomingWebhook/9161730248524ccd884964191535d559/e6c57fc7-d758-42f4-bfbf-05db838b6952",
+                  factDefinitions: [[name: "Build Failure", template: "Build was finalized with errors"]]
           }
       }
   environment {

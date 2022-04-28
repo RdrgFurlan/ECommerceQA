@@ -23,6 +23,8 @@ pipeline {
       stage('Build web driver docker image') {
         steps {
           sh '''
+          docker stop FirefoxStandalone
+          docker container prune -f
           docker pull selenium/standalone-firefox
           docker run --name FirefoxStandalone -d -p 4444:4444 --shm-size="2g" selenium/standalone-firefox:latest
           '''

@@ -77,12 +77,12 @@ pipeline {
             deleteDir() /* clean up our workspace */
           }
           success {
-              office365ConnectorSend webhookUrl: ${env.TEAMS_WEBHOOK_URL},
-                  factDefinitions: [[name: "Test Results", template: ${env.TEST_REPORT_URL}]]
+              office365ConnectorSend webhookUrl: "${env.TEAMS_WEBHOOK_URL}",
+                  factDefinitions: [[name: "Test Results", template: "${env.TEST_REPORT_URL}"]]
           }
           failure {
-              office365ConnectorSend webhookUrl: ${env.TEAMS_WEBHOOK_URL},
-                  factDefinitions: [[name: "Test Results", template: ${env.TEST_REPORT_URL}]]
+              office365ConnectorSend webhookUrl: "${env.TEAMS_WEBHOOK_URL}",
+                  factDefinitions: [[name: "Test Results", template: "${env.TEST_REPORT_URL}"]]
           }
       }
 }

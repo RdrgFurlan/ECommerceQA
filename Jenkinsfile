@@ -2,9 +2,9 @@ pipeline {
 
     agent any
 
-   environment {
+    environment {
          TEST_REPORT_URL = "http://localhost:8080/job/ECommerceQA/${env.BUILD_NUMBER}/cucumber-html-reports_fb242bb7-17b2-346f-b0a4-d7a3b25b65b4/overview-features.html"
-     }
+    }
 
     stages {
         stage('Tools Version') {
@@ -85,7 +85,4 @@ pipeline {
                   factDefinitions: [[name: "Test Results", template: ${env.TEST_REPORT_URL}]]
           }
       }
-  environment {
-    Dev = 'DEV'
-  }
 }

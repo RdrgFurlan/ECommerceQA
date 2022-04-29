@@ -47,7 +47,7 @@ pipeline {
         stage('Build Solution') {
             steps {
                 sh '''
-                    mvn clean test
+                    mvn clean test || clean
                 '''
             }
         }
@@ -75,7 +75,11 @@ pipeline {
                 docker container prune -f
             '''
             deleteDir() /* clean up our workspace */
+
+            office365ConnectorSend webhookUrl: "${env.TEAMS_WEBHOOK_URL}",
+                              factDefinitions: [[name: "Test Results", template: "${env.TEST_REPORT_URL}"]]
           }
+          /*
           success {
               office365ConnectorSend webhookUrl: "${env.TEAMS_WEBHOOK_URL}",
                   factDefinitions: [[name: "Test Results", template: "${env.TEST_REPORT_URL}"]]
@@ -84,5 +88,6 @@ pipeline {
               office365ConnectorSend webhookUrl: "${env.TEAMS_WEBHOOK_URL}",
                   factDefinitions: [[name: "Test Results", template: "${env.TEST_REPORT_URL}"]]
           }
+          */
       }
 }

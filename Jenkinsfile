@@ -29,7 +29,7 @@ pipeline {
         stage('Clean docker containers'){
             steps{
                 sh '''
-                    docker stop FirefoxStandalone || true
+                    docker stop FirefoxStandalone -t 60 || true
                     docker container prune -f
                 '''
             }
@@ -69,15 +69,17 @@ pipeline {
     }
     post {
         always {
-            echo 'One way or another, I have finished'
+            echo 'Ending docker sessions'
             sh '''
-                docker stop FirefoxStandalone
+                docker stop FirefoxStandalone -t 60
                 docker container prune -f
             '''
-            deleteDir() /* clean up our workspace */
 
+            echo 'Begin of Teams Message Integration'
             office365ConnectorSend webhookUrl: "${env.TEAMS_WEBHOOK_URL}",
                               factDefinitions: [[name: "Test Results", template: "${env.TEST_REPORT_URL}"]]
+
+            echo 'End of Teams Message Integration'
           }
           /*
           success {

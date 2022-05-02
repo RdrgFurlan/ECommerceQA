@@ -19,13 +19,16 @@ public final class WebElementUtils {
         return wait;
     }
 
-    public static void checkElementAvailability(WebElement element) {
-        WebElement webElement = getDriverWait().until(ExpectedConditions.elementToBeClickable(element));
-        if (webElement == null){
-            throw new RuntimeException("Element " + element.getText() + " is null");
-        }
+//    public static void checkElementAvailability(WebElement element) {
+//        WebElement webElement = getDriverWait().until(ExpectedConditions.elementToBeClickable(element));
+//        if (webElement == null){
+//            throw new RuntimeException("Element " + element.getText() + " is null");
+//        }
+//    }
+    public static void waitUntilBeVisible(WebElement element) {
+        WebDriverWait wait = getDriverWait();
+        wait.until(ExpectedConditions.visibilityOf(element));
     }
-
     public static void waitUntilBeVisibleAndClickable(WebElement element) {
         WebDriverWait wait = getDriverWait();
         wait.until(ExpectedConditions.visibilityOf(element));
@@ -33,7 +36,7 @@ public final class WebElementUtils {
     }
 
     public static void sendKeysToField(WebElement element, String value) {
-        checkElementAvailability(element);
+        waitUntilBeVisibleAndClickable(element);
         element.click();
         element.sendKeys(Keys.DELETE);
         element.sendKeys(value);
@@ -53,12 +56,12 @@ public final class WebElementUtils {
     }
 
     public static String getElementValue(WebElement webElement) {
-        checkElementAvailability(webElement);
+        waitUntilBeVisible(webElement);
         return webElement.getText().trim();
     }
 
     public static void storeElementValueOnDataManager(String storeKey, WebElement storeElement) {
-        checkElementAvailability(storeElement);
+        waitUntilBeVisible(storeElement);
         DataManagerServices.setStoredVariable(storeKey, storeElement.getText().trim());
     }
 }

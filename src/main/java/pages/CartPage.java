@@ -83,7 +83,7 @@ public class CartPage {
     }
 
     public boolean checkEmptyCartMessage() {
-        WebElementUtils.checkElementAvailability(emptyCartAfterRemovalLabel);
+        WebElementUtils.waitUntilBeVisible(emptyCartAfterRemovalLabel);
         return true;
     }
 

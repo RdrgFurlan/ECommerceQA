@@ -27,6 +27,6 @@ public class HomePage {
     }
 
     public void verifyUserSigned() {
-        WebElementUtils.checkElementAvailability(logout);
+        WebElementUtils.waitUntilBeVisible(logout);
     }
 }

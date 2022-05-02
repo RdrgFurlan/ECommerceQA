@@ -41,7 +41,7 @@ public class LoginPage {
     }
 
     public void checkSignInErrorAlert() {
-        WebElementUtils.checkElementAvailability(getSigninErrorAlert);
+        WebElementUtils.waitUntilBeVisible(getSigninErrorAlert);
     }
 
     public boolean compareErrorMessageReceived(String expectedErrorMessage) {

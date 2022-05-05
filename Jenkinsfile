@@ -48,7 +48,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh '''
-                        mvn clean test || clean
+                        mvn clean test
                     '''
                 }
             }

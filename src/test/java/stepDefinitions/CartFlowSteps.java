@@ -7,7 +7,6 @@ import services.DataManagerServices;
 public class CartFlowSteps {
 
     CartPage objCartPage;
-
     @Then("I search for a product {string}")
     public void i_search_for_a_product(String prodDescription) {
         objCartPage = new CartPage();
